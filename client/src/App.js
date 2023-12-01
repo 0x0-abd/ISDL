@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Login from "./pages/Login";
 import Shop from './pages/Shop';
 import Navbar from './pages/Navbar';
+import Cart from './pages/Cart';
 import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
 
 function App() {
@@ -45,6 +46,8 @@ function App() {
           <Route exact path="/shop" element={<Shop />} />
 
           <Route exact path="/login" element={isLoggedIn ? <Navigate to="/" /> : <Login setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} />} />
+
+          <Route exact path="/cart" element={!isLoggedIn ? <Navigate to="/login" /> : <Cart setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} />} />
         </Routes>
 
       </BrowserRouter>

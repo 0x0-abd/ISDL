@@ -19,7 +19,7 @@ const Shop = () => {
         {console.log(inventoryData.length)}
         {inventoryData.length > 0 ? inventoryData.map((item) => (
           <div className="col-md-3" key={item._id}>
-            <Item title={item.item_name} description={item.item_description} />
+            <Item title={item.item_name} description={item.item_description} item={item} />
           </div>
         )) : (
           <h2>No Items Found</h2>
