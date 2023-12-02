@@ -57,3 +57,18 @@ exports.recentOrder =async (req,res)=>{
     }
    
 }
+
+exports.createOrder = async (req, res) =>{
+    
+    try{
+        //create new order
+        const newOrder= await new Order(req.body)
+        //save order and respond
+        const order=await newOrder.save();
+        res.status(200).json({status: 'ok',order:order});
+    }catch(err){
+        console.log(err);
+        const errors= err;
+        res.status(400).json({errors});
+    }
+}

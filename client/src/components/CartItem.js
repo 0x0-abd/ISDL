@@ -37,14 +37,14 @@ const CartItem = (props) => {
           <h6 className="text-black mb-0">{item.item_name}</h6>
         </div>
         <div className="col-md-3 col-lg-3 col-xl-2 d-flex justify-content-evenly">
-          <button className="btn btn-primary btn-sm" onClick={handleDecrementProduct}>
+          <button className="btn btn-primary btn-sm" onClick={handleDecrementProduct} style={{width:"23%"}}>
             <i className="fas fa-minus"> - </i>
           </button>
 
 
           {item.itemQuantity}
 
-          <button className="btn btn-primary btn-sm" onClick={handleAddProduct}>
+          <button className="btn btn-primary btn-sm" onClick={handleAddProduct} style={{width:"23%"}}>
             <i className="fas fa-plus"> + </i>
           </button>
         </div>

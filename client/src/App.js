@@ -5,6 +5,8 @@ import Login from "./pages/Login";
 import Shop from './pages/Shop';
 import Navbar from './pages/Navbar';
 import Cart from './pages/Cart';
+import Register from "./pages/Register"
+import Orders from './pages/Orders';
 import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
 
 function App() {
@@ -29,9 +31,9 @@ function App() {
         sessionStorage.setItem('setupTime', now);
       }
     }
-    if (localStorage.getItem("isLoggedIn") === "true") {
+    if (sessionStorage.getItem("isLoggedIn") === "true") {
       setIsLoggedIn(true);
-      setIsAdmin(JSON.parse(localStorage.getItem("isAdmin")));
+      setIsAdmin(JSON.parse(sessionStorage.getItem("isAdmin")));
     }
   }, []);
   
@@ -45,9 +47,13 @@ function App() {
 
           <Route exact path="/shop" element={<Shop />} />
 
+          <Route exact path="/register" element={<Register />} />
+
           <Route exact path="/login" element={isLoggedIn ? <Navigate to="/" /> : <Login setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} />} />
 
-          <Route exact path="/cart" element={!isLoggedIn ? <Navigate to="/login" /> : <Cart setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} />} />
+          <Route exact path="/cart" element={<Cart setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} />} />
+
+          <Route exact path="/orders" element={isLoggedIn ? <Orders /> : <Navigate to="/" />} />
         </Routes>
 
       </BrowserRouter>

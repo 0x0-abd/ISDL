@@ -1,16 +1,23 @@
 const mongoose=require('mongoose');
 
 const OrderSchema =new mongoose.Schema({
-    _id:{
-        type: mongoose.Schema.Types.ObjectId,
-    },
     user_id:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true,
         
     },
-    item_count:{
+    products:[{
+        _id: String,
+        item_name: String,
+        itemQuantity: Number,
+        price: Number
+    }],
+    quantity:{
+        type: Number,
+        default: 0,
+    },
+    total:{
         type: Number,
         default: 0,
     },
@@ -21,17 +28,6 @@ const OrderSchema =new mongoose.Schema({
     order_date:{
         type: Date,
     },
-    total_cost:{
-        type: Number,
-        default: 0,
-    },
-    purchased_items:[{
-        item_id: String,
-        item_name: String,
-        item_count: Number,
-        description: String,
-        total_cost: Number
-    }],
     isVerified: {
         type: Boolean,
         default: false,

@@ -21,6 +21,10 @@ const ItemSchema =new mongoose.Schema({
     in_stock:{
         type: Boolean,
         default: true,
+    },
+    category:{
+        type: String,
+        default: ""
     }
 },
 {

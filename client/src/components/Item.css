@@ -1,0 +1,11 @@
+.card-img-top {
+    height:10vw
+}
+
+
+@media only screen and (max-width: 580px) {
+    .card-img-top {
+        height: 30vw;
+    }
+}
+

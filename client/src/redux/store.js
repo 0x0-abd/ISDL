@@ -11,13 +11,12 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import storage from "redux-persist/lib/storage";
+import sessionStorage from "redux-persist/es/storage/session";
 
-// const persistConfig = {
-//   key: "root",
-//   version: 1,
-//   storage,
-// };
+const persistConfig = {
+  key: "root",
+  storage: sessionStorage
+};
 
 const appReducer = combineReducers({ user: userReducer, cart: cartReducer });
 
@@ -29,16 +28,21 @@ const rootReducer = (state, action) => {
   return appReducer(state, action);
 }
 
-// const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+// export const store = configureStore({
+//   reducer: rootReducer
+//   // middleware: (getDefaultMiddleware) =>
+//   //   getDefaultMiddleware({
+//   //     serializableCheck: {
+//   //       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+//   //     },
+//   //   }),
+// });
 
 export const store = configureStore({
-  reducer: rootReducer
-  // middleware: (getDefaultMiddleware) =>
-  //   getDefaultMiddleware({
-  //     serializableCheck: {
-  //       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-  //     },
-  //   }),
+  reducer: persistedReducer
 });
 
-// export let persistor = persistStore(store);
+
+export let persistor = persistStore(store);

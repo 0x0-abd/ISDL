@@ -1,16 +1,52 @@
-import React from 'react'
+import React, { useState } from 'react'
 import CartItem from '../components/CartItem'
 import { useSelector } from 'react-redux/es/hooks/useSelector'
+import { publicRequest } from '../requestMethod';
 
 const Cart = () => {
-    const {products, quantity, total} = useSelector((state) => state.cart)
+    const [inProcess, setInProcess] = useState(false);
+    const { products, quantity, total } = useSelector((state) => state.cart);
+    const { currentUser } = useSelector((state) => state.user);
+
+    const handleClick = async () => {
+
+
+
+        try {
+            setInProcess(true)
+            const res = await publicRequest.post("/order", {
+                user_id: currentUser.user._id,
+                products: products.map((item) => ({
+                    _id: item._id,
+                    item_name: item.item_name,
+                    itemQuantity: item.itemQuantity,
+                    price: item.price
+                })),
+                quantity: quantity,
+                total: total,
+                order_date: new Date()
+            }).then((response) => {
+                console.log(response);
+                if (response != null) {
+                    setInProcess(false)
+                }
+            }
+            );
+        } catch (err) {
+            setInProcess(false);
+        }
+    }
+
     return (
         <>
-            <section className="h-100 h-custom" style={{/*backgroundColor: "#d2c9ff"*/}}>
+            {inProcess && (<div className="alert alert-info" role="alert">
+                Confirming your order. Please wait...
+            </div>)}
+            <section className="h-100 h-custom" style={{/*backgroundColor: "#d2c9ff"*/ }}>
                 <div className="container py-5 h-100">
                     <div className="row d-flex justify-content-center align-items-center h-100">
                         <div className="col-12">
-                            <div className="card card-registration card-registration-2" style={{borderRadius: "15px"}}>
+                            <div className="card card-registration card-registration-2" style={{ borderRadius: "15px" }}>
                                 <div className="card-body p-0">
                                     <div className="row g-0">
                                         <div className="col-lg-8">
@@ -21,9 +57,9 @@ const Cart = () => {
                                                 </div>
                                                 <hr className="my-4" />
 
-                                                {products.length>0 ? products.map((product) => (
+                                                {products.length > 0 ? products.map((product) => (
                                                     <div key={product._id}>
-                                                    <CartItem item={product} />
+                                                        <CartItem item={product} />
                                                     </div>
                                                 )) : <h2> No Items in Cart</h2>}
 
@@ -63,8 +99,8 @@ const Cart = () => {
                                                     <h5>Rs {total}</h5>
                                                 </div>
 
-                                                <button type="button" className="btn btn-dark btn-block btn-lg"
-                                                    data-mdb-ripple-color="dark">Place Order</button>
+                                                <button type="button" className="btn btn-dark btn-block btn-lg" disabled={!currentUser || inProcess}
+                                                    data-mdb-ripple-color="dark" onClick={handleClick} >Place Order</button>
 
                                             </div>
                                         </div>
