@@ -2,7 +2,7 @@ import './App.css';
 import React, { useState, useEffect } from "react";
 import Home from './pages/Home';
 import Login from "./pages/Login";
-import Shop from './pages/Shop';
+import Shop from './pages/Categories/Shop';
 import Navbar from './pages/Navbar';
 import Cart from './pages/Cart';
 import Register from "./pages/Register"
@@ -12,6 +12,7 @@ import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [view, setView] = useState("all");
   let className = "page-container";
   if (!isLoggedIn) {
     className += " logged-out-screen";
@@ -41,11 +42,16 @@ function App() {
     <>
       <BrowserRouter>
 
-        <Navbar isAdmin={isAdmin} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} />
+        <Navbar isAdmin={isAdmin} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} view={view} setView={setView} />
         <Routes>
           <Route exact path="/" element={<Home setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} />} />
 
-          <Route exact path="/shop" element={<Shop />} />
+          <Route exact path="/shop" element={<Shop show={"all"} />} />
+          <Route exact path="/shop/bakery" element={<Shop show={"bakery"}/>} />
+          <Route exact path="/shop/fruits" element={<Shop show={"fruits"}/>} />
+          <Route exact path="/shop/snacks" element={<Shop show={"snacks"}/>} />
+          <Route exact path="/shop/beverages" element={<Shop show={"beverages"}/>} />
+          <Route exact path="/shop/personal" element={<Shop show={"personal"}/>} />
 
           <Route exact path="/register" element={<Register />} />
 

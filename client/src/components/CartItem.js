@@ -30,10 +30,10 @@ const CartItem = (props) => {
         <div className="col-md-2 col-lg-2 col-xl-2">
           <img
             src="placeholder_product.jpg"
-            className="img-fluid rounded-3" alt="Cotton T-shirt" />
+            className="img-fluid rounded-3" />
         </div>
         <div className="col-md-3 col-lg-3 col-xl-3">
-          <h6 className="text-muted">Shirt</h6>
+          <h6 className="text-muted text-capitalize">{item.category}</h6>
           <h6 className="text-black mb-0">{item.item_name}</h6>
         </div>
         <div className="col-md-3 col-lg-3 col-xl-2 d-flex justify-content-evenly">

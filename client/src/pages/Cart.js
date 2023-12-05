@@ -2,19 +2,22 @@ import React, { useState } from 'react'
 import CartItem from '../components/CartItem'
 import { useSelector } from 'react-redux/es/hooks/useSelector'
 import { publicRequest } from '../requestMethod';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { emptyCart } from '../redux/cartRedux';
 
 const Cart = () => {
     const [inProcess, setInProcess] = useState(false);
     const { products, quantity, total } = useSelector((state) => state.cart);
     const { currentUser } = useSelector((state) => state.user);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleClick = async () => {
 
-
-
         try {
             setInProcess(true)
-            const res = await publicRequest.post("/order", {
+            await publicRequest.post("/order", {
                 user_id: currentUser.user._id,
                 products: products.map((item) => ({
                     _id: item._id,
@@ -28,7 +31,10 @@ const Cart = () => {
             }).then((response) => {
                 console.log(response);
                 if (response != null) {
-                    setInProcess(false)
+                    setInProcess(false);
+                    dispatch(emptyCart())
+                    let path = "/orders";
+                    navigate(path);
                 }
             }
             );

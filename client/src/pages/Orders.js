@@ -13,7 +13,7 @@ const Orders = () => {
         
         publicRequest.get(`order/${currentUser.user._id}`).then(res => {
             console.log(res.data.orders)
-            setOrderHistoryList(res.data.orders)
+            setOrderHistoryList(res.data.orders.reverse())
         })
     }, [])
 

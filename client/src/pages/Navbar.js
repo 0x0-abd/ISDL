@@ -1,13 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { useNavigate } from "react-router-dom";
-import { Dispatch } from 'react';
 import { useDispatch } from 'react-redux';
 
 const Navbar = (props) => {
 
     let navigate = useNavigate();
-    const title = props.title;
     const logged = props.isLoggedIn ? "Yes" : "No";
     const admin = props.isAdmin ? "Yes" : "No";
     const cartEnabled = "nav-link" + (props.isLoggedIn ? " active" : " disabled");
@@ -29,6 +27,7 @@ const Navbar = (props) => {
         navigate(path);
     }
 
+
     return (
         <>
             <nav className="navbar navbar-expand-lg bg-dark bg-body-tertiary sticky-top" data-bs-theme="dark">
@@ -43,22 +42,22 @@ const Navbar = (props) => {
                                 <Link className="nav-link active" to="/orders">Orders</Link>
                             </li>)}
                             <li className="nav-item mx-3">
-                                <Link className="nav-link active" aria-current="page" to="/shop">All Products</Link>
+                                <Link className="nav-link active" aria-current="page" to="/shop" >All Products</Link>
                             </li>
                             <li className="nav-item mx-3">
-                                <Link className="nav-link active" to="/cart">Bakery</Link>
+                                <Link className="nav-link active" to="/shop/bakery">Bakery</Link>
                             </li>
                             <li className="nav-item mx-3">
-                                <Link className="nav-link active" to="/cart">Fruits</Link>
+                                <Link className="nav-link active" to="/shop/fruits">Fruits</Link>
                             </li>
                             <li className="nav-item mx-3">
-                                <Link className="nav-link active" to="/cart">Snacks</Link>
+                                <Link className="nav-link active" to="/shop/snacks">Snacks</Link>
                             </li>
                             <li className="nav-item mx-3">
-                                <Link className="nav-link active" to="/cart">Beverages</Link>
+                                <Link className="nav-link active" to="/shop/beverages">Beverages</Link>
                             </li>
                             <li className="nav-item mx-3">
-                                <Link className="nav-link active" to="/cart">Personal Care</Link>
+                                <Link className="nav-link active" to="/shop/personal">Personal Care</Link>
                             </li>
 
                         </ul>
