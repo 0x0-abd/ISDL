@@ -53,7 +53,7 @@ function App() {
           <Route exact path="/shop/beverages" element={<Shop show={"beverages"}/>} />
           <Route exact path="/shop/personal" element={<Shop show={"personal"}/>} />
 
-          <Route exact path="/register" element={<Register />} />
+          <Route exact path="/register" element={<Register setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} />} />
 
           <Route exact path="/login" element={isLoggedIn ? <Navigate to="/" /> : <Login setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} />} />
 

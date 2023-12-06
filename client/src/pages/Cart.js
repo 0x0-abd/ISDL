@@ -105,7 +105,7 @@ const Cart = () => {
                                                     <h5>Rs {total}</h5>
                                                 </div>
 
-                                                <button type="button" className="btn btn-dark btn-block btn-lg" disabled={!currentUser || inProcess}
+                                                <button type="button" className="btn btn-dark btn-block btn-lg" disabled={!currentUser || inProcess || products.length===0}
                                                     data-mdb-ripple-color="dark" onClick={handleClick} >Place Order</button>
 
                                             </div>

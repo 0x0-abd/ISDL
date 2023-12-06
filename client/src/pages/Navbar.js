@@ -11,6 +11,7 @@ const Navbar = (props) => {
     const cartEnabled = "nav-link" + (props.isLoggedIn ? " active" : " disabled");
     const dispatch = useDispatch();
     console.log(cartEnabled);
+    const view = props.view;
 
     const handleLogout = () => {
         props.setIsLoggedIn(false);
@@ -41,13 +42,13 @@ const Navbar = (props) => {
                             {props.isLoggedIn && (<li className="nav-item mx-3">
                                 <Link className="nav-link active" to="/orders">Orders</Link>
                             </li>)}
-                            <li className="nav-item mx-3">
+                            <li className="nav-item mx-3" style={view==="all" ? {color:"green"}:{}}>
                                 <Link className="nav-link active" aria-current="page" to="/shop" >All Products</Link>
                             </li>
-                            <li className="nav-item mx-3">
+                            <li className="nav-item mx-3" style={view==="bakery" ? {color:"green"}:{}}>
                                 <Link className="nav-link active" to="/shop/bakery">Bakery</Link>
                             </li>
-                            <li className="nav-item mx-3">
+                            <li className="nav-item mx-3" style={view==="fruits" ? {color:"green"}:{}}>
                                 <Link className="nav-link active" to="/shop/fruits">Fruits</Link>
                             </li>
                             <li className="nav-item mx-3">

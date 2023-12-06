@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import axios from 'axios';
+import { publicRequest } from '../requestMethod';
 
 const style = {
   position: 'absolute',
@@ -16,7 +17,7 @@ const style = {
   borderRadius: 2
 };
 
-export default function OrderHistory({ order }) {
+export default function OrderHistory({ isAdmin, order, flag, setFlag }) {
   console.log(order);
   const [open, setOpen] = React.useState(false);
   const [orderData, setOrderData] = React.useState([])
@@ -25,6 +26,17 @@ export default function OrderHistory({ order }) {
   const handleClose = () => {
     setOpen(false);
     setRetrieved(false)
+  }
+
+
+  const handleToggle = async () =>{
+    try {
+      publicRequest.post(`/order/confirm/${order._id}`, {negation:!order.isVerified});
+      setFlag(flag+1);
+
+    } catch (err) {
+
+    }
   }
 
   // if (open && !retrieved) {
@@ -49,6 +61,12 @@ export default function OrderHistory({ order }) {
         onClick={handleOpen}>
         Details
       </button>
+
+      {isAdmin && <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 border border-black-700 rounded"
+        onClick={handleToggle}>
+        {!order.isVerified ? "Verify" : "Undo"}
+      </button>}
+
       <Modal
         open={open}
         onClose={handleClose}

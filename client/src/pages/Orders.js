@@ -7,21 +7,37 @@ import Modal from '../components/OrderHistory'
 const Orders = () => {
 
     const [orderHistoryList, setOrderHistoryList] = useState([]);
+    const [flag, setFlag] = useState(0);
     const {currentUser} = useSelector((state) => state.user);
 
+
     useEffect(() => {
+
+        if(currentUser.user.isAdmin) {
+            publicRequest.get(`order/all`).then(res => {
+                console.log(res.data.orders)
+                setOrderHistoryList(res.data.orders.reverse())
+            })
+        } else {
+            publicRequest.get(`order/${currentUser.user._id}`).then(res => {
+                console.log(res.data.orders)
+                setOrderHistoryList(res.data.orders.reverse())
+            })
+        }
         
-        publicRequest.get(`order/${currentUser.user._id}`).then(res => {
-            console.log(res.data.orders)
-            setOrderHistoryList(res.data.orders.reverse())
-        })
-    }, [])
+        
+    }, [flag])
 
     function date(dateto) {
 
         const date_to_be = new Date(dateto)
         return date_to_be.toDateString()
     
+    }
+
+    function time(timeto) {
+        const time_to_be = new Date(timeto)
+        return time_to_be.toTimeString()
     }
 
     return (
@@ -48,11 +64,11 @@ const Orders = () => {
                                 </thead>
                                 <tbody className="table__body">
                                     {orderHistoryList.map((order, i) => (
-                                        <tr>
+                                        <tr style={order.isVerified?{opacity:"0.7"} : {}}>
                                             <td>{i + 1}</td>
-                                            <td className="px-6 py-4 whitespace-nowrap">
+                                            <td className="px-6 py-4 whitespace-nowrap" >
                                                 <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                    {date(order.order_date)}
+                                                    {time(order.order_date) + "  " + date(order.order_date)}
                                                 </span>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">
@@ -62,8 +78,8 @@ const Orders = () => {
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap">
                                                 {order.isVerified ?
-                                                    (<span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                        Accepted
+                                                    (<span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800" style={{color:"green"}}>
+                                                        Completed
                                                     </span>) :
                                                     (
                                                         <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-red-800">
@@ -73,7 +89,7 @@ const Orders = () => {
                                                 }
                                             </td>
                                             <td className="table__actions text-center flex justify-center">
-                                                <Modal order={order ?? {}} />
+                                                <Modal flag={flag} setFlag={setFlag} isAdmin={currentUser.user.isAdmin} order={order ?? {}} />
                                             </td>
                                         </tr>
                                     ))}

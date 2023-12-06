@@ -52,10 +52,10 @@ const Item = (props) => {
         <>
             <div className="card text-bg-dark my-3" style={cardStyle}>
                 <img src="https://static.vecteezy.com/system/resources/previews/024/692/158/large_2x/food-grocery-store-shopping-illustration-with-foods-items-and-products-assortiment-on-the-supermarket-in-flat-cartoon-hand-drawn-templates-vector.jpg" className="card-img-top" style={{width:"100%", objectFit:"cover"}} alt="..." />
-                {currentUser!=null && currentUser.user.isAdmin && <h5><button onClick={handleToggle} ><span className="position-absolute translate-middle badge rounded-pill bg-info" style={{ left: "15%", top: "5%", zIndex: "1" }}>
+                {currentUser!=null && currentUser.user.isAdmin && <h5><span className="position-absolute translate-middle badge rounded-pill bg-info" onClick={handleToggle} style={{ left: "15%", top: "5%", zIndex: "1" }}>
                     Toggle Stock
                     <span className="visually-hidden">unread messages</span>
-                </span></button></h5>}
+                </span></h5>}
                 {inCart && item.in_stock && <h5><span className="position-absolute translate-middle badge rounded-pill bg-success" style={{ left: "90%", top: "5%", zIndex: "1" }}>
                     In Cart
                     <span className="visually-hidden">unread messages</span>

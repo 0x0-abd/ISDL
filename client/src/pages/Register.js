@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { publicRequest } from "../requestMethod";
+import { login } from "../redux/apiCalls"
+
 
 // const Container = styled.div`
 //   width: 100vw;
@@ -87,6 +89,23 @@ const Login = ({ setIsLoggedIn, setIsAdmin }) => {
     );
   };
 
+  const loginFunction = async () => {
+    await login(dispatch, { username, password }).then((response) => {
+      console.log(response);
+      if (response != null) {
+        console.log("hello2");
+        var now = new Date().getTime();
+        sessionStorage.setItem('setupTime', now)
+        sessionStorage.setItem("isAdmin", response.user.isAdmin);
+        setIsAdmin(response.user.isAdmin);
+        sessionStorage.setItem("isLoggedIn", "true");
+        setIsLoggedIn(true);
+        let path = "/shop";
+        navigate(path);
+      };
+    })
+  }
+
   const handleClick = async (e) => {
 
     if(name==="") {
@@ -151,22 +170,10 @@ const Login = ({ setIsLoggedIn, setIsAdmin }) => {
         email:email,
         password:password,
         name:name
-      })
+      }).then( loginFunction )
     }
     // e.preventDefault();
-    // login(dispatch, { username, password }).then((response) => {
-    //   if (response != null) {
-    //     console.log("hello2");
-    //     var now = new Date().getTime();
-    //     sessionStorage.setItem('setupTime', now)
-    //     sessionStorage.setItem("isAdmin", response.user.isAdmin);
-    //     setIsAdmin(response.user.isAdmin);
-    //     sessionStorage.setItem("isLoggedIn", "true");
-    //     setIsLoggedIn(true);
-    //     let path = "/shop";
-    //     navigate(path);
-    //   };
-    // });
+    ;
   };
   return (
     <>

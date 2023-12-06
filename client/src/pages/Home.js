@@ -22,11 +22,10 @@ const Home = () => {
       backgroundColor: "rgb(0,0,0, 0.5",
       color:"white",
       fontSize:"24px"}}>
-        <h1><b>GFC App </b></h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint, nulla sequi laudantium rem ducimus magni unde reiciendis. Vel, impedit aliquam, molestiae dolorem quae hic commodi perferendis accusantium cumque perspiciatis odit!</p>
+        <h1 style={{fontFamily:"Sora"}}><b>LNM Grocery and Fruits Shop</b></h1> <br/>
+        <p className='fw-light' style={{fontSize:"18px"}}>A website for campus grocery and fruit shop to allow students and campus residents to place orders online and pick them up later</p>
         <div className='d-flex justify-content-around' style={{padding:"10px"}}>
-          <button className="btn btn-lg btn-primary" onClick={handleClick}>Login</button>
-          <button className="btn btn-lg btn-primary">Register</button>
+          <button className="btn btn-lg btn-success rounded-pill" onClick={handleClick}>Login</button>
         </div>
       </div>
 
