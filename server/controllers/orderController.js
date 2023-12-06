@@ -72,3 +72,21 @@ exports.createOrder = async (req, res) =>{
         res.status(400).json({errors});
     }
 }
+
+exports.toggleOrder = async (req, res) => {
+    const item_id = req.params.orderId;
+    console.log(item_id, req.body);
+    const {negation} = req.body;
+    try {
+        const order = await Order.findByIdAndUpdate(
+            item_id,
+            {
+                isVerified: negation,
+            },
+            { new: true }
+        );
+        res.status(200).json({ status: 'Order Updated Successfully', order: order });
+    }catch(err) {
+        res.status(500).json({ status: 'Order not found', order: false, error: err });
+    }
+}

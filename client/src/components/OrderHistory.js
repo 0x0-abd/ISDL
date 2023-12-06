@@ -57,15 +57,17 @@ export default function OrderHistory({ isAdmin, order, flag, setFlag }) {
 
   return (
     <div>
-      <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 border border-black-700 rounded"
+      <div className='d-flex justify-content-evenly'>
+      <button className="btn btn-primary"
         onClick={handleOpen}>
         Details
       </button>
 
-      {isAdmin && <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 border border-black-700 rounded"
+      {isAdmin && <button className="btn btn-primary" 
         onClick={handleToggle}>
         {!order.isVerified ? "Verify" : "Undo"}
       </button>}
+      </div>
 
       <Modal
         open={open}
