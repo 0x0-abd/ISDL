@@ -21,7 +21,7 @@ git clone https://github.com/your-username/grocery-website.git
 
 Navigate into the project directory
 ```
-cd grocery-website
+cd ISDL
 ```
 
 Install client and server dependencies
