@@ -7,6 +7,8 @@ import Navbar from './pages/Navbar';
 import Cart from './pages/Cart';
 import Register from "./pages/Register"
 import Orders from './pages/Orders';
+import ShadNav from './pages/ShadNav'
+import NewNavBar from './pages/NewNavBar'
 import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
 
 function App() {
@@ -42,7 +44,11 @@ function App() {
     <>
       <BrowserRouter>
 
-        <Navbar isAdmin={isAdmin} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} view={view} setView={setView} />
+        {/* <Navbar isAdmin={isAdmin} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} view={view} setView={setView} /> */}
+        {/* <div className="text-red-700">Hello Friends</div> */}
+        {/* <NewComp /> */}
+        {/* <ShadNav /> */}
+        <NewNavBar />
         <Routes>
           <Route exact path="/" element={<Home setIsLoggedIn={setIsLoggedIn} setIsAdmin={setIsAdmin} />} />
 

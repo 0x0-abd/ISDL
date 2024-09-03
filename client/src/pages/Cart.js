@@ -19,6 +19,7 @@ const Cart = () => {
             setInProcess(true)
             await publicRequest.post("/order", {
                 user_id: currentUser.user._id,
+                user_name: currentUser.user.name,
                 products: products.map((item) => ({
                     _id: item._id,
                     item_name: item.item_name,

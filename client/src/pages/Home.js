@@ -28,20 +28,6 @@ const Home = () => {
           <button className="btn btn-lg btn-success rounded-pill" onClick={handleClick}>Login</button>
         </div>
       </div>
-
-      <div style={{
-        height: "100vh",
-        width: "100vw",
-        backgroundImage: `url(${image})`,
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "cover",
-        filter: "blur(6px)",
-        zIndex: "-1"
-      }}>
-
-
-      </div>
     </>
   )
 }
