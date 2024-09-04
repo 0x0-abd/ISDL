@@ -34,7 +34,7 @@ const handleErrors=(err)=>{
 }
 
 //jwt expects a time in second while cookie expects a time in milliseconds
-const maxAge=3*24*60*60;
+const maxAge = 60 * 60 * 1000;
 
 const createToken=(id)=>{
     return jwt.sign({id},'net ninja secret',{//return a token with a signature. the header automatically get applied  
@@ -55,12 +55,22 @@ exports.registerUser = async (req,res)=>{
             _id: new mongoose.Types.ObjectId(),
             username:req.body.username,
             email:req.body.email,
-            password:req.body.password,
+            password:req.body.hashedPassword,
             name:req.body.name
         })
         //save user and respond
         const user=await newUser.save();
-        res.status(200).json({status: 'ok',user:user});
+        const token=createToken(user._id);
+        //httpOnly: can't access and change in frontend js
+        res.cookie('jwt',token,{
+            httpOnly:true,
+            secure:true,
+            sameSite:"none",
+            expires: new Date(Date.now()+maxAge),
+        });
+        const userWithoutPassword = user.toObject();
+        delete userWithoutPassword.password;
+        res.status(200).json({status: 'ok',user:userWithoutPassword});
     }catch(err){
         console.log(err);
         const errors= handleErrors(err);
@@ -74,11 +84,53 @@ exports.login=async (req,res)=>{
         const user=await User.login(username,password);
         const token=createToken(user._id);
         //httpOnly: can't access and change in frontend js
-        res.cookie('jwt',token,{httpOnly:true,maxAge:maxAge*1000});
-        res.status(200).json({user:user});
+        res.cookie('jwt',token,{
+            httpOnly:true,
+            secure:true,
+            sameSite:"none",
+            expires: new Date(Date.now()+maxAge),
+        });
+        const userWithoutPassword = user.toObject();
+        delete userWithoutPassword.password;
+
+        res.status(200).json({user:userWithoutPassword});
     } catch (err) {
         const errors= handleErrors(err);
         console.log(errors,);
         res.status(400).json({errors});
     }
 }
+
+exports.getUser = async (req, res) => {
+    try {
+        const token = req.cookies.jwt;
+        if (!token) {
+            return res.status(401).json({ success: false, message: "No token provided" });
+        }
+
+        const decoded = jwt.verify(token, jwtSecret);
+        const user = await User.findById(decoded.id).select('-password'); // Exclude password
+
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+
+        return res.status(200).json({ success: true, user });
+    } catch (e) {
+        console.error(e);
+        return res.status(400).json({ success: false, message: e.message });
+    }
+};
+
+exports.signOut = async (req, res) => {
+    res.clearCookie('jwt', {
+        path: "/",
+        secure: true,
+        httpOnly: true,
+        sameSite: "none"
+    });
+    return res.status(200).json({
+        success: true,
+        message: "Signed out successfully"
+    });
+};
