@@ -108,7 +108,7 @@ exports.getUser = async (req, res) => {
             return res.status(401).json({ success: false, message: "No token provided" });
         }
 
-        const decoded = jwt.verify(token, jwtSecret);
+        const decoded = jwt.verify(token, 'net ninja secret');
         const user = await User.findById(decoded.id).select('-password'); // Exclude password
 
         if (!user) {
