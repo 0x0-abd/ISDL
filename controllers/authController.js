@@ -50,10 +50,10 @@ exports.registerUser = async (req,res)=>{
         const salt=await bcrypt.genSalt(10);
         const hashedPassword=await bcrypt.hash(req.body.password,salt);
         //create new user
-        console.log(req.body.username);
+        console.log(req.body.email);
         const newUser= await new User({
             _id: new mongoose.Types.ObjectId(),
-            username:req.body.username,
+            // username:req.body.username,
             email:req.body.email,
             password:req.body.hashedPassword,
             name:req.body.name
@@ -79,9 +79,9 @@ exports.registerUser = async (req,res)=>{
 }
 
 exports.login=async (req,res)=>{
-    const {username,password} = req.body;//destructring
+    const {email,password} = req.body;//destructring
     try {
-        const user=await User.login(username,password);
+        const user=await User.login(email,password);
         const token=createToken(user._id);
         //httpOnly: can't access and change in frontend js
         res.cookie('jwt',token,{

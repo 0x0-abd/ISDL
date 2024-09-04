@@ -12,7 +12,6 @@ const UserSchema = new mongoose.Schema({
     },
     username: {
         type: String,
-        require: true,
         unique: true,
         min: 3,
         max: 20,
@@ -35,8 +34,8 @@ const UserSchema = new mongoose.Schema({
     timestamps: true
 });
 
-UserSchema.statics.login = async function(username, password) {
-    const user = await this.findOne({username});
+UserSchema.statics.login = async function(email, password) {
+    const user = await this.findOne({email});
     console.log(user)
     if(user) {
         const auth = await bcrypt.compare(password, foundUser.password);
