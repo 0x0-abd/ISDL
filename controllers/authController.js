@@ -55,7 +55,7 @@ exports.registerUser = async (req,res)=>{
             _id: new mongoose.Types.ObjectId(),
             // username:req.body.username,
             email:req.body.email,
-            password:req.body.hashedPassword,
+            password:hashedPassword,
             name:req.body.name
         })
         //save user and respond
