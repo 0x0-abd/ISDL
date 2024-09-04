@@ -2,7 +2,7 @@ const router=require("express").Router();
 const User=require("../models/User.js");
 const bcrypt = require("bcrypt");
 
-const {registerUser,login, getUser} =require("../controllers/authController.js");
+const {registerUser,login, getUser, signOut} =require("../controllers/authController.js");
 
 //1.Register
 router.post("/register",registerUser);
