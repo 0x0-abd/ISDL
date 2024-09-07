@@ -11,6 +11,6 @@ router.get("/:userId", orderHistoryUser);
 
 router.post("/confirm/:orderId", toggleOrder);
 
-router.post("order/:orderId/:status", updateOrder)
+router.post("/order/:orderId/:status", updateOrder)
 
 module.exports=router;
