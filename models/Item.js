@@ -25,6 +25,9 @@ const ItemSchema =new mongoose.Schema({
     category:{
         type: String,
         default: ""
+    },
+    imageUrl: {
+        type: String,
     }
 },
 {

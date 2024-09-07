@@ -1,5 +1,8 @@
 const router = require("express").Router();
 const User = require("../models/User");
+const upload = require("../middleware/multer")
+
+
 const { updateUser, deleteUser, allUsers } = require("../controllers/userController")
 
 const { inventory, searchItem, FSN1, FSN2, toInventory, issuedItems, addItem, itemCost1, itemCost2, itemCost3, issuedDecreaser, deleteItem, toggleStock, categoryList } = require("../controllers/itemController");
@@ -8,7 +11,7 @@ const { inventory, searchItem, FSN1, FSN2, toInventory, issuedItems, addItem, it
 router.get("/inventory",inventory);
 router.get("/inventory/:category", categoryList)
 
-router.post("/addItem",addItem);
+router.post("/addItem", upload.single('file'), addItem);
 router.delete("/deleteItem/:item_id", deleteItem);
 router.put("/toggleStock/:itemId", toggleStock)
 

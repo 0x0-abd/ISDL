@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const Item = require("../models/Item");
+const cloudinary = require('../config/cloudinary');
 const mongoose = require("mongoose")
 
 exports.inventory = async (req, res) => {
@@ -13,20 +14,51 @@ exports.inventory = async (req, res) => {
 
 exports.addItem = async (req, res) => {
     try {
-        const newItem = await new Item({
+        // Initialize variables for item creation
+        let imageUrl = '';
+
+        // Check if a file is uploaded
+        if (req.file) {
+            // Upload image to Cloudinary
+            const uploadResult = await cloudinary.uploader.upload(req.file.path, {
+                folder: "gfc-items",
+                format: "png"
+            });
+
+            if (uploadResult) {
+                // Get optimized URL
+                imageUrl = cloudinary.url(uploadResult.public_id, {
+                    transformation: [
+                        {
+                            quality: 'auto',
+                            gravity: 'auto',
+                            width: 500,
+                            height: 500,
+                            crop: 'fill'
+                        }
+                    ]
+                });
+            } else {
+                return res.status(500).json({ status: 'Image upload failed' });
+            }
+        }
+
+        // Create new item with or without image URL
+        const newItem = new Item({
             _id: new mongoose.Types.ObjectId(),
             item_name: req.body.item_name,
             price: req.body.price,
             item_description: req.body.item_description,
-            category: req.body.category
-        })
+            category: req.body.category,
+            imageUrl,
+        });
+
         const item = await newItem.save();
-        res.status(200).json({ status: 'Item Added Successfully', item: item });
+        return res.status(200).json({ status: 'Item Added Successfully', item: item });
     } catch (err) {
         console.log(err);
         res.status(500).json({ status: 'Item Not Added Successfully', item: false, error: err });
     }
-
 }
 
 exports.deleteItem = async (req, res) => {

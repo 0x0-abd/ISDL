@@ -7,6 +7,7 @@ const authRoutes=require('./routes/auth.js');
 const userRoutes=require("./routes/User.js");
 const adminRoutes=require("./routes/Admin.js");
 const orderRoutes=require("./routes/Order.js")
+const mediaRoutes=require("./routes/Media.js")
 const cookieParser = require('cookie-parser');
 
 dotenv.config();
@@ -31,6 +32,7 @@ app.use("/auth", authRoutes);
 app.use("/user",userRoutes);
 app.use("/admin",adminRoutes);
 app.use("/order",orderRoutes);
+app.use("/media",mediaRoutes);
 
 
 app.get("/",(req,res)=>{
