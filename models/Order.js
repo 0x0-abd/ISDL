@@ -34,9 +34,11 @@ const OrderSchema =new mongoose.Schema({
     isVerified: {
         type: Boolean,
         default: false,
+    },
+    status: {
+        type: String,
+        default: "pending",
     }
-   
-   
 },
 {
     timestamps: true

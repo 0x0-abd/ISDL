@@ -90,3 +90,21 @@ exports.toggleOrder = async (req, res) => {
         res.status(500).json({ status: 'Order not found', order: false, error: err });
     }
 }
+
+exports.updateOrder = async (req, res) => {
+    const item_id = req.params.orderId;
+    const status = req.params.status;
+
+    try {
+        const order = await Order.findByIdAndUpdate(
+            item_id,
+            {
+                status,
+            },
+            { new: true }
+        );
+        res.status(200).json({ status: 'Order Updated Successfully', order: order });
+    }catch(err) {
+        res.status(500).json({ status: 'Order not found', order: false, error: err });
+    }
+}
