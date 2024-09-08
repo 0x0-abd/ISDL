@@ -12,7 +12,7 @@ router.get("/inventory",inventory);
 router.get("/inventory/:category", categoryList)
 
 router.post("/addItem", upload.single('file'), addItem);
-router.delete("/deleteItem/:item_id", deleteItem);
+router.delete("/deleteItem/:itemId", deleteItem);
 router.put("/toggleStock/:itemId", toggleStock)
 
 

@@ -2,6 +2,7 @@ const User = require("../models/User");
 const Item = require("../models/Item");
 const cloudinary = require('../config/cloudinary');
 const mongoose = require("mongoose")
+const { extractPublicId } = require("cloudinary-build-url");
 
 exports.inventory = async (req, res) => {
     try{
@@ -62,10 +63,17 @@ exports.addItem = async (req, res) => {
 }
 
 exports.deleteItem = async (req, res) => {
-    const item_id = req.params.item_id;
+    const item_id = req.params.itemId;
     try {
+        const itemDetails = await Item.findById(item_id)
         const item = await Item.deleteOne({_id: item_id});
-        res.status(200).json({ status: 'Item Deleted Successfully', item: item });
+        // console.log(itemDetails)
+        if(itemDetails.imageUrl) {
+            const imageId = extractPublicId(itemDetails.imageUrl);
+            // console.log(imageId)
+        }
+        cloudinary.uploader.destroy(imageId);
+        return res.status(200).json({ status: 'Item Deleted Successfully', item: item });
     }catch(err) {
         res.status(500).json({ status: 'Item not found', item: false, error: err });
     }
