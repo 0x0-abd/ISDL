@@ -17,7 +17,7 @@ app.use(cookieParser())
 connectDB();
 
 const corsConfig = {
-    origin: ['http://localhost:5173', 'https://isdl-front-end.vercel.app'],
+    origin: ['http://localhost:5173', 'https://isdl-front-end.vercel.app', 'https://grocery-store-kohl.vercel.app'],
     credentials: true,
 };
 app.use(cors(corsConfig));
