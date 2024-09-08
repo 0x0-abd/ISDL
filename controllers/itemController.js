@@ -71,8 +71,8 @@ exports.deleteItem = async (req, res) => {
         if(itemDetails.imageUrl) {
             const imageId = extractPublicId(itemDetails.imageUrl);
             // console.log(imageId)
+            cloudinary.uploader.destroy(imageId);
         }
-        cloudinary.uploader.destroy(imageId);
         return res.status(200).json({ status: 'Item Deleted Successfully', item: item });
     }catch(err) {
         res.status(500).json({ status: 'Item not found', item: false, error: err });
