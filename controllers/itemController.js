@@ -71,7 +71,7 @@ exports.deleteItem = async (req, res) => {
         if(itemDetails.imageUrl) {
             const imageId = extractPublicId(itemDetails.imageUrl);
             // console.log(imageId)
-            cloudinary.uploader.destroy(imageId.split('?')[0]);
+            await cloudinary.uploader.destroy(imageId.split('?')[0]);
         }
         return res.status(200).json({ status: 'Item Deleted Successfully', item: item });
     }catch(err) {
