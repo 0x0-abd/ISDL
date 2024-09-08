@@ -79,6 +79,61 @@ exports.deleteItem = async (req, res) => {
     }
 }
 
+exports.updateItem = async (req, res) => {
+    const item_id = req.params.itemId;
+    try {
+        let imageUrl = '';
+        if (req.file) {
+            const itemDetails = await Item.findById(item_id);
+            if(itemDetails.imageUrl){
+                const imageId = extractPublicId(itemDetails.imageUrl);
+                await cloudinary.uploader.destroy(imageId.split('?')[0]);
+            }
+            const uploadResult = await cloudinary.uploader.upload(req.file.path, {
+                folder: "gfc-items",
+                format: "png"
+            });
+            if (uploadResult) {
+                imageUrl = cloudinary.url(uploadResult.public_id, {
+                    transformation: [
+                        {
+                            quality: 'auto',
+                            gravity: 'auto',
+                            width: 500,
+                            height: 500,
+                            crop: 'fill'
+                        }
+                    ]
+                });
+            } else {
+                return res.status(500).json({ status: 'Image upload failed' });
+            }
+        }
+
+        // Create new item with or without image URL
+        const updatedData = {
+            item_name: req.body.item_name,
+            price: req.body.price,
+            item_description: req.body.item_description,
+            category: req.body.category,
+        };
+
+        if (imageUrl) {
+            updatedData.imageUrl = imageUrl;
+        }
+        const updatedItem = await Item.findByIdAndUpdate(item_id, updatedData, { new: true });
+
+        if (!updatedItem) {
+            return res.status(404).json({ status: 'Item not found' });
+        }
+
+        return res.status(200).json({ status: 'Item Updated Successfully', item: updatedItem });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ status: 'Item Not Added Successfully', item: false, error: err });
+    }
+}
+
 exports.toggleStock = async (req, res) => {
     const item_id = req.params.itemId;
     console.log(item_id, req.body);
