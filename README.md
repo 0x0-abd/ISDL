@@ -41,13 +41,6 @@ A fully functional e-commerce website for grocery shopping. Users can browse ite
 - **Intuitive UI for Item Updates:** 
   - Admins benefit from a user-friendly interface for managing inventory, making it easy to add or edit items
 
-## Introduction
-
-* React Frontend: Utilizes React.js for building the frontend user interface.
-* Bootstrap Styling: Styled with Bootstrap for a responsive and sleek design.
-* Node.js Backend: Powered by Node.js for handling server-side logic and API requests.
-* MongoDB Database: Utilizes MongoDB for storing product information and user orders.
-* Authentication: Support
 
 ## Tech Stack
 - **Frontend:** React, TypeScript, Tailwind CSS
