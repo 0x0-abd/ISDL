@@ -2,7 +2,9 @@
 
 >   An online website to order grocery products.
 
-This is a full-stack grocery website created using React, Bootstrap, Node.js, and MongoDB. Customers can browse through products via category and order them from the cart. Admins can confirm orders and add new products. Visit https://isdl-front-end.vercel.app/ for a live working demo.
+This is a full-stack grocery website created using React, Bootstrap, Node.js, and MongoDB. 
+
+- [Link for demo](https://grocery-store-kohl.vercel.app/)
 
 ## Introduction
 
