@@ -2,7 +2,7 @@
 
 >   An online website to order grocery products.
 
-This is a full-stack grocery website created using React, Bootstrap, Node.js, and MongoDB. 
+This is a full-stack grocery website created using React, Redux, Tailwind, Node.js, MongoDB and Cloudinary.
 
 - [Link for demo](https://grocery-store-kohl.vercel.app/)
 
